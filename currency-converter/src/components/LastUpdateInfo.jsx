@@ -1,4 +1,4 @@
-// LastUpdateInfo.js
+
 import React, { useEffect, useState } from 'react';
 import { fetchLatestRates } from '../services/historicalService';
 

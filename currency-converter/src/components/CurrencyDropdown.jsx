@@ -8,7 +8,8 @@ const CurrencyDropdown = ({
     favorites, 
     onChange, 
     onFavoriteToggle, 
-    getCountryCode 
+    getCountryCode,
+    darkMode
 }) => {
 
   const isFavorite = (currency) => favorites.includes(currency);
@@ -16,46 +17,31 @@ const CurrencyDropdown = ({
   // Sorting currencies: Favorites first
   const sortedCurrencies = [...favorites, ...currencies.filter(currency => !favorites.includes(currency))];
 
-  // Custom component for rendering each currency option
-  const CurrencyOption = ({ currency }) => (
-    <div className="flex items-center p-2">
-      <img 
-        src={`https://flagsapi.com/${getCountryCode(currency)}/flat/32.png`} 
-        alt="flag" 
-        className="w-6 h-4 mr-2"
-      />
-      {isFavorite(currency) ? (
-        <FaStar className="text-yellow-500 mr-1" />
-      ) : (
-        <FaRegStar className="text-gray-400 mr-1" />
-      )}
-      <span className={`text-base font-semibold ${isFavorite(currency) ? 'text-[#244E6D]' : 'text-black'}`}>
-        {currency}
-      </span>
-    </div>
-  );
-
   return (
     <div className="relative">
-      <label className="text-[#244e6d] text-base font-semibold font-['Inter']">
+      <label className= {` ${ darkMode ? "text-neutral-100" : "text-[#244e6d] "} text-base font-semibold font-['Inter'] `}>
         {title}:
         <img 
           src={`https://flagsapi.com/${getCountryCode(selectedCurrency)}/flat/64.png`} 
           alt="flag" 
-          className="w-[31.20px] h-[22.29px] absolute left-0 flex top-11 pl-3" // Added margin for spacing
+          className="w-[31.20px] h-[22.29px] absolute left-0 flex top-11 pl-3" 
         />
       </label>
-
-      {/* Custom Currency Dropdown */}
+    
+      {/* Custom Dropdown */}
       <div className="flex items-center mt-2">
         <select
           value={selectedCurrency}
           onChange={(e) => onChange(e.target.value)}
-          className=" w-[200px] h-[43.03px] sm:w-[182.06px] sm:h-[27.02px] md:w-[282px] md:h-11  rounded-lg border border-[#244e6d] focus:outline-none px-9"
+          className= {` md:w-[280px] md:h-[43.03px]  sm:w-[182.06px] sm:h-[28.31px] w-[289.95px] h-[43.03px]  ${darkMode ? "text-white  border-neutral-100" : "text-[#244e6d] border-[#244e6d]  "} bg-transparent  sm:h-[27.02px] md:w-[282px] md:h-11 rounded-lg border focus:outline-none px-9 `}
         >
           {sortedCurrencies.map((currency) => (
-            <option key={currency} value={currency}>
-              <CurrencyOption currency={currency} />
+            <option 
+              key={currency} 
+              value={currency} 
+              className={isFavorite(currency) ? 'bg-[#E8DA8C]' : ''}
+            >
+              {currency}
             </option>
           ))}
         </select>
@@ -63,7 +49,7 @@ const CurrencyDropdown = ({
         {/* Favorite Toggle Button */}
         <button
           onClick={() => onFavoriteToggle(selectedCurrency)}
-          className=" absolute right-5 flex items-center text-sm leading-5"
+          className="absolute right-5 flex items-center"
         >
           {isFavorite(selectedCurrency) ? (
             <FaStar className="text-[#244e6d] w-5 h-5" />
@@ -77,4 +63,8 @@ const CurrencyDropdown = ({
 };
 
 export default CurrencyDropdown;
+
+
+
+// 
 
