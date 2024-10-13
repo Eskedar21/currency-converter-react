@@ -1,40 +1,60 @@
+import React, { useState, useEffect } from 'react';
+import emailjs from 'emailjs-com';
 
-import React, { useState } from 'react';
-import { db } from '../services/firebaseConfig'; // Adjust the import based on your folder structure
-import { collection, addDoc } from 'firebase/firestore';
-
-const SetAlert = ({ fromCurrency, toCurrency, amount, darkMode }) => {
+const SetAlert = ({ fromCurrency, toCurrency, conversionRate, darkMode }) => {
   const [alertValue, setAlertValue] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState(''); // State for success/failure message
+  const [isAlertSet, setIsAlertSet] = useState(false); // State to track if alert is set
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (alertValue && email) {
+      setIsAlertSet(true);
+      setMessage('Alert set! We will notify you when the rate changes.');
+    }
+  };
+
+  // Effect to check if the conversion rate meets the alert condition
+  useEffect(() => {
+    if (isAlertSet && conversionRate) {
+      const rate = parseFloat(conversionRate);
+      const alertThreshold = parseFloat(alertValue);
+
+      if (rate > alertThreshold) {
+        sendAlertEmail(email, fromCurrency, toCurrency, alertValue, rate);
+        setIsAlertSet(false); // Reset alert after triggering
+      }
+    }
+  }, [conversionRate, isAlertSet, alertValue, email, fromCurrency, toCurrency]);
+
+  const sendAlertEmail = async (recipientEmail, fromCurrency, toCurrency, alertValue, rate) => {
+    const templateParams = {
+      user_email: recipientEmail,
+      fromCurrency: fromCurrency, 
+      toCurrency: toCurrency,      
+      alertValue: rate.toFixed(2)  
+    };
+
     try {
-      // Save the alert to Firestore
-      await addDoc(collection(db, 'alerts'), {
-        email,
-        alertValue,
-        fromCurrency,
-        toCurrency,
-        amount,
-        createdAt: new Date(),
-      });
-      
-      // Show success message after form submission
-      setMessage('Success! We will notify you when the rate changes.');
-      
-      // Clear input fields
-      setAlertValue('');
-      setEmail('');
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        'service_z6b0fo9', 
+        'template_uowxk58', 
+        templateParams,
+        'WJ37ot3hEXEsIBG3I' 
+      );
+
+      console.log('Email sent successfully!', response.text);
     } catch (error) {
-      console.error('Error setting alert:', error);
-      setMessage('Error setting alert. Please try again later.');
+      console.error('Error sending email:', error);
+      setMessage('Error sending alert. Please try again later.');
     }
   };
 
   return (
-    <div className={`w-screen h-[564px]  flex-col items-center inline-flex mt-28 relative px-4`}>
+    <div className={`w-screen h-[564px] flex-col items-center inline-flex mt-28 relative px-4`}>
       <div className={`${darkMode ? "text-white" : "text-[#244e6d]"} w-full max-w-[600px] flex-col justify-start items-center gap-8 inline-flex`}>
         <h2 className="text-center text-[34px] font-normal font-['Inter']">Waiting on a better rate?</h2>
         <p className="text-center text-base font-normal font-['Inter']">
@@ -50,6 +70,9 @@ const SetAlert = ({ fromCurrency, toCurrency, amount, darkMode }) => {
                 <p className={`${darkMode ? "text-white" : "text-[#244e6d]"} text-base font-normal font-['Inter']`}>
                   {`1 ${fromCurrency} goes above ${alertValue}`}
                 </p>
+                <p className={`${darkMode ? "text-white" : "text-[#244e6d]"} text-sm font-normal font-['Inter']`}>
+                  Current rate: {conversionRate} {fromCurrency} to {toCurrency}
+                </p>
               </div>
               <input
                 type="number"
@@ -57,6 +80,7 @@ const SetAlert = ({ fromCurrency, toCurrency, amount, darkMode }) => {
                 onChange={(e) => setAlertValue(e.target.value)}
                 placeholder="1000"
                 className={`w-full h-[42px] rounded-lg px-3 text-sm font-normal font-['Inter'] border ${darkMode ? "border-neutral-100" : "border-[#244e6d]"} bg-transparent`}
+                required
               />
             </label>
           </div>
@@ -85,7 +109,7 @@ const SetAlert = ({ fromCurrency, toCurrency, amount, darkMode }) => {
 
         {/* Display success or error message */}
         {message && (
-          <p className="mt-4 text-center text-lg font-semibold text-red-500">
+          <p className={`mt-4 text-center text-lg font-semibold ${message.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>
             {message}
           </p>
         )}
@@ -95,4 +119,3 @@ const SetAlert = ({ fromCurrency, toCurrency, amount, darkMode }) => {
 };
 
 export default SetAlert;
-
