@@ -1,4 +1,5 @@
-import React from 'react';
+
+// import React from 'react';
 import { FaRegStar, FaStar } from "react-icons/fa"; 
 
 const CurrencyDropdown = ({ 
@@ -18,22 +19,24 @@ const CurrencyDropdown = ({
   const sortedCurrencies = [...favorites, ...currencies.filter(currency => !favorites.includes(currency))];
 
   return (
-    <div className="relative">
-      <label className= {` ${ darkMode ? "text-neutral-100" : "text-[#244e6d] "} text-base font-semibold font-['Inter'] `}>
+    <div className="relative w-full">
+      {/* Label with flag */}
+      <label className={`${darkMode ? "text-neutral-100" : "text-[#244e6d]"} text-base font-semibold font-['Inter'] `}>
         {title}:
         <img 
           src={`https://flagsapi.com/${getCountryCode(selectedCurrency)}/flat/64.png`} 
           alt="flag" 
-          className="w-[31.20px] h-[22.29px] absolute left-0 flex top-11 pl-3" 
+          className="w-8 h-6 absolute  left-0 flex md:top-9 sm:top-7 top-9  pl-3" 
         />
       </label>
-    
+
       {/* Custom Dropdown */}
-      <div className="flex items-center mt-2">
+      <div className="flex items-center ">
         <select
           value={selectedCurrency}
           onChange={(e) => onChange(e.target.value)}
-          className= {` md:w-[280px] md:h-[43.03px]  sm:w-[182.06px] sm:h-[28.31px] w-[289.95px] h-[43.03px]  ${darkMode ? "text-white  border-neutral-100" : "text-[#244e6d] border-[#244e6d]  "} bg-transparent  sm:h-[27.02px] md:w-[282px] md:h-11 rounded-lg border focus:outline-none px-9 `}
+          className={`${darkMode ? "text-white border-neutral-100" : "text-[#244e6d] border-[#244e6d]"} bg-transparent rounded-lg border focus:outline-none px-9
+          w-[289.95px] h-[43.03px]  md:w-[280px] md:h-[43.03px] sm:w-[180px] sm:h-[30px]`}
         >
           {sortedCurrencies.map((currency) => (
             <option 
@@ -49,7 +52,7 @@ const CurrencyDropdown = ({
         {/* Favorite Toggle Button */}
         <button
           onClick={() => onFavoriteToggle(selectedCurrency)}
-          className="absolute right-5 flex items-center"
+          className="absolute right-5 top-9 sm:top-8 md:top-9 flex items-center"
         >
           {isFavorite(selectedCurrency) ? (
             <FaStar className="text-[#244e6d] w-5 h-5" />
@@ -63,8 +66,3 @@ const CurrencyDropdown = ({
 };
 
 export default CurrencyDropdown;
-
-
-
-// 
-

@@ -16,24 +16,20 @@ const CurrencyInputContainer = ({
   onConvert, 
 }) => {
   return (
-    <div className={`md:w-[1200px] md:h-80 sm:h-80 sm:w-[772px] w-[400px] h-[1000px] ${darkMode ? "bg-black" : "bg-[#f8f8f8]"} rounded-lg absolute top-52 left-1/2 transform -translate-x-1/2 flex flex-col items-center pt-10`}>
-      <div className="flex flex-col sm:flex-row sm:gap-10 md:gap-10 space-y-3 sm:space-y-0 md:items-center">
+    <div className={`md:w-[1200px] md:h-80 sm:w-[90%] min-h-[250px]  w-[500px] ${darkMode ? "bg-black" : "bg-[#f8f8f8]"} rounded-lg absolute top-52 left-1/2 transform -translate-x-1/2 flex flex-col items-center pt-10 pb-2`}>
+      <div className="flex flex-col sm:flex-row sm:gap-5 md:gap-10 space-y-3 sm:space-y-0 md:items-center">
         <AmountInput onAmountChange={onAmountChange} amount={amount} darkMode={darkMode}/>
         <CurrencySelector onCurrencyChange={onCurrencyChange} fromCurrency={fromCurrency} toCurrency={toCurrency} darkMode={darkMode} />
       </div>
 
-      
-
-      <div className='absolute right-32 bottom-10'>
-      <button 
-        onClick={onConvert} 
-        className={`${darkMode ? "bg-[#0f2b40]" : "bg-[#244e6d]"} mt-5 w-[157px] h-[39px] px-4 py-2.5  rounded-lg flex justify-center items-center gap-2.5 text-white text-base font-semibold font-['PT Serif']`}>
-        Convert
-      </button>
+      <div className='flex justify-center mt-5 md:absolute md:right-32 md:bottom-10'>
+        <button 
+          onClick={onConvert} 
+          className={`${darkMode ? "bg-[#0f2b40]" : "bg-[#244e6d]"} mt-5 w-[150px] h-[40px] rounded-lg flex justify-center items-center gap-2 text-white text-base font-semibold`}>
+          Convert
+        </button>
       </div>
-     
 
-      {/* Conversion Result */}
       <ConversionResult 
         fromCurrency={fromCurrency} 
         toCurrency={toCurrency} 

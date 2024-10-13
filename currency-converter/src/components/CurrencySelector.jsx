@@ -78,7 +78,7 @@ const handleFavorite = (currency) => {
   }
 
   return (
-    <div className=" flex gap-4">
+    <div className=" flex flex-col sm:gap-4 my sm:flex-row">
       {/* From Currency Dropdown */}
       <CurrencyDropdown
         title="From"
@@ -92,14 +92,14 @@ const handleFavorite = (currency) => {
       />
 
       {/* Swap Button */}
-      <div className="flex justify-center items-center my-8">
-      <button 
-        onClick={swapCurrencies} 
-        className={`w-[45px] h-[45px] rounded-full border ${darkMode ? "border-neutral-100" : "border-[#244E6D] "} flex justify-center items-center `} // Change height to match width and make it a circle
-      > 
-        <HiMiniArrowsRightLeft className= {` w-6 h-6  ${darkMode ? "text-neutral-100" : "text-[#244E6D] "} `} />
-      </button>
-    </div>
+      <div className="relative md:top-[68px] md:left-11 sm:top-14 sm:left-8 top-14 left-28">
+        <button 
+          onClick={swapCurrencies} 
+          className={`ansolute top-10 left-14 md:w-[45px] md:h-[45px] sm:w-[30px] sm:h-[30px] w-[46.11px] h-[45.08px] sm:-rotate-180 md:-rotate-180 origin-top-left -rotate-90 rounded-full border ${darkMode ? "border-neutral-100" : "border-[#244E6D] "} flex justify-center items-center`}
+        > 
+          <HiMiniArrowsRightLeft className={`w-6 md:h-6 sm:h-[15.44px] h-[24.59px] ${darkMode ? "text-neutral-100" : "text-[#244E6D] "}`} />
+        </button>
+      </div>
 
       {/* To Currency Dropdown */}
       <CurrencyDropdown

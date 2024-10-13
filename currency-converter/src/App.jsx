@@ -72,7 +72,7 @@ const App = () => {
     };
 
     return (
-        <div className={darkMode ? 'dark' : 'light'}>
+        <div className={`&{darkMode ? 'dark' : 'light' } mx-0`}>
             <NavBar darkMode={darkMode} />
             <button 
                 type='button'
@@ -88,8 +88,6 @@ const App = () => {
                     {errorMessage}
                 </div>
             )}
-
-            {/* Pass the necessary props to CurrencyInputContainer */}
             <CurrencyInputContainer 
                 onCurrencyChange={handleCurrencyChange} 
                 onAmountChange={handleAmountChange} 
@@ -99,12 +97,10 @@ const App = () => {
                 setConversionRate={setConversionRate}
                 convertedAmount={convertedAmount}
                 setConvertedAmount={setConvertedAmount}
-                onConvert={handleConvert} // Pass the handleConvert function
+                onConvert={handleConvert} 
                 darkMode={darkMode}
             />
             
-            {/* Conversion Result is now handled within CurrencyInputContainer */}
-
             <HistoricalRatesGraph
             fromCurrency={fromCurrency} 
             toCurrency={toCurrency} 
@@ -117,37 +113,45 @@ const App = () => {
                 onSetAlert={handleSetAlert} 
                 darkMode={darkMode}
             />
+                        <div className={` ${darkMode ? "bg-[#0f2b40]" : "bg-[#244e6d]"} w-full md:h-[551px]  h-auto p-10 mt-4`}>
+                        <div className="text-center text-white md:text-4xl text-[37.30px] sm:text-3xl  font-normal font-['PT Serif'] mb-10">
+                            How to convert {fromCurrency} to {toCurrency}
+                        </div>
 
-            <div className={` ${darkMode ? " bg-[#0f2b40]" : " bg-[#244e6d] "} w-screen h-[500px] p-10 ` }>
-                <div className="text-center text-white text-4xl font-normal font-['PT Serif']">
-                    How to convert {fromCurrency} to {toCurrency}
-                </div>
+                        <div className='flex flex-col md:flex-row justify-center items-center gap-8 md:gap-14 p-5'>
+                            <div className={`${darkMode ? "bg-[#666666]/70" : "bg-[#f8f8f8]/70"} w-[374px] h-[300.37px] md:w-[234.62px] md:h-[234.62px] lg:w-[361px] lg:h-[368px] rounded-[24.86px] md:rounded-3xl backdrop-blur-[20px]`}>
+                            <div className={`${darkMode ? "text-white" : "text-[#244e6d]"} px-4 py-8 space-y-4`}>
+                                <h2 className="text-3xl font-semibold font-['Inter']">1</h2>
+                                <p className="text-2xl font-normal font-['Inter']">Input your amount</p>
+                                <p className="text-sm font-normal font-['Inter'] leading-normal">
+                                Simply type in the box how much you want to convert.
+                                </p>
+                            </div>
+                            </div>
 
-                <div className='flex justify-center items-center gap-14 p-5'>
-                    <div className={`${darkMode ? " bg-[#666666]/70 " : "bg-white/70  "} w-[361px] h-[368px] rounded-3xl backdrop-blur-[20px]`}>
-                        <div className= {` ${darkMode ? "text-white " : "text-[#244e6d]  "} px-6 py-10 space-y-6`}>
-                            <h2 className=" text-4xl font-semibold font-['Inter']">1</h2>
-                            <p className="w-[276px] text-4xl font-normal font-['Inter']">Input your amount</p>
-                            <p className=" text-base font-normal font-['Inter'] leading-normal">Simply type in the box how much you want to convert.</p>
+                            <div className={`${darkMode ? "bg-[#666666]/70" : "bg-[#f8f8f8]/70"} w-[374px] h-[300.37px] md:w-[234.62px] md:h-[234.62px] lg:w-[361px] lg:h-[368px] rounded-[24.86px] md:rounded-3xl backdrop-blur-[20px]`}>
+                            <div className={`${darkMode ? "text-white" : "text-[#244e6d]"} px-4 py-8 space-y-4`}>
+                                <h2 className="text-3xl font-semibold font-['Inter']">2</h2>
+                                <p className="text-2xl font-normal font-['Inter']">Choose your currencies</p>
+                                <p className="text-sm font-normal font-['Inter'] leading-normal">
+                                Click on the dropdown to select {fromCurrency} in the first dropdown as the currency that you want to convert and {toCurrency} in the second dropdown as the currency you want to convert to.
+                                </p>
+                            </div>
+                            </div>
+
+                            <div className={`${darkMode ? "bg-[#666666]/70" : "bg-[#f8f8f8]/70"} w-[374px] h-[300.37px] md:w-[234.62px] md:h-[234.62px] lg:w-[361px] lg:h-[368px] rounded-[24.86px] md:rounded-3xl backdrop-blur-[20px]`}>
+                            <div className={`${darkMode ? "text-white" : "text-[#244e6d]"} px-4 py-8 space-y-4`}>
+                                <h2 className="text-3xl font-semibold font-['Inter']">3</h2>
+                                <p className="text-2xl font-normal font-['Inter']">That's it</p>
+                                <p className="text-sm font-normal font-['Inter'] leading-normal">
+                                Our currency converter will show you the current {fromCurrency} to {toCurrency} rate and how it's changed over the past day, week, or month.
+                                </p>
+                            </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className={`${darkMode ? " bg-[#666666]/70 " : "bg-white/70  "} w-[361px] h-[368px] rounded-3xl backdrop-blur-[20px]`}>
-                        <div className= {` ${darkMode ? "text-white " : "text-[#244e6d]  "} px-6 py-10 space-y-6`}>
-                            <h2 className="d] text-4xl font-semibold font-['Inter']">2</h2>
-                            <p className="w-[276px] text-4xl font-normal font-['Inter']">Choose your currencies</p>
-                            <p className=" text-base font-normal font-['Inter'] leading-normal">Click on the dropdown to select {fromCurrency} in the first dropdown as the currency that you want to convert and {toCurrency} in the second drop down as the currency you want to convert to.</p>
                         </div>
-                    </div>
-                    <div className={`${darkMode ? " bg-[#666666]/70 " : "bg-white/70  "} w-[361px] h-[368px] rounded-3xl backdrop-blur-[20px]`}>
-                        <div className= {` ${darkMode ? "text-white " : "text-[#244e6d]  "} px-6 py-10 space-y-6`}>
-                            <h2 className="text-4xl font-semibold font-['Inter']">3</h2>
-                            <p className="w-[276px] text-4xl font-normal font-['Inter']">That's it</p>
-                            <p className=" text-base font-normal font-['Inter'] leading-normal">Our currency converter will show you the current {fromCurrency} to {toCurrency} rate and how it's changed over the past day, week or month.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+                                </div>
     );
 };
 

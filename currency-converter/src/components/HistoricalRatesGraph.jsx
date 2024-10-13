@@ -74,9 +74,9 @@ const HistoricalRatesGraph = ({ fromCurrency, toCurrency, darkMode }) => {
     };
 
     return (
-        <div className={` ${darkMode ? "bg-[#181818]" : "bg-white" } w-screen h-[600px] relative  z-0 mt-5`}>
-            <div className='max-w-[800px] mx-auto my-56 '>
-                <h1 className={` ${darkMode ? "text-white" : " text-black "} text-lg font-semibold font-['Inter']`}>
+        <div className={` ${darkMode ? "bg-[#181818]" : "bg-white" }  mt-16 `}>
+            <div className='md:max-w-[800px] md:w-full md:mx-auto w-[430px] h-auto top-48  sm:top-16 mx-auto pb-36 sm:pb-5 relative pt-24   sm:mx-auto sm:w-[600px] sm:px-3 sm:relative'>
+                <h1 className={` ${darkMode ? "text-white" : "text-black"} text-lg md:text-xl font-semibold font-['Inter']`}>
                     {fromCurrency} to {toCurrency} Converter Chart
                 </h1>
                 <span className={darkMode ? "text-white" : "text-[#244e6d] h-[23px] text-xl font-bold font-['Inter']"}>
@@ -85,7 +85,7 @@ const HistoricalRatesGraph = ({ fromCurrency, toCurrency, darkMode }) => {
                 <p className={` ${darkMode ? "text-white" : "text-black"} text-sm font-normal font-['Inter'] flex justify-center items-center pb-5`}>
                     Time Period
                 </p>
-                <div className='flex gap-3'>
+                <div className='flex flex-wrap gap-3 justify-center'>
                     <button
                         onClick={() => setTimePeriod('48h')}
                         className={` ${timePeriod === '48h' ? 'bg-[#244e6d] text-white' : darkMode ? "border-[#c0c0c0] text-[#c0c0c0]" : "border-[#244e6d] text-[#244e6d]"} w-[81px] h-[29px] px-2 py-1.5 hover:bg-[#244e6d] hover:text-white rounded-[61px] border flex justify-center items-center  text-sm font-normal font-['Inter']`}
@@ -94,7 +94,7 @@ const HistoricalRatesGraph = ({ fromCurrency, toCurrency, darkMode }) => {
                     </button>
                     <button
                         onClick={() => setTimePeriod('1w')}
-                        className={` ${timePeriod === '1w' ? 'bg-[#244e6d] text-white' : darkMode ? "border-[#c0c0c0] text-[#c0c0c0]" : "border-[#244e6d] text-[#244e6d]"} w-[81px] h-[29px] px-2 py-1.5 hover:bg-[#244e6d] hover:text-white rounded-[61px] border flex  justify-center items-center  text-sm font-normal font-['Inter']`}
+                        className={` ${timePeriod === '1w' ? 'bg-[#244e6d] text-white' : darkMode ? "border-[#c0c0c0] text-[#c0c0c0]" : "border-[#244e6d] text-[#244e6d]"} w-[81px] h-[29px] px-2 py-1.5 hover:bg-[#244e6d] hover:text-white rounded-[61px] border flex justify-center items-center  text-sm font-normal font-['Inter']`}
                     >
                         1 Week
                     </button>
