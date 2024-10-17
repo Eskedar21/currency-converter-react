@@ -14,17 +14,6 @@ export const fetchHistoricalRates = async (fromCurrency = 'EUR', toCurrency = 'U
     }
   };
   
-  // Fetch supported currencies
-  export const fetchCurrencies = async () => {
-    try {
-      const response = await fetch(`${baseUrl}/currencies`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching currencies:', error);
-    }
-  };
-
 
   // Fetch the latest exchange rate along with the last update timestamp
 export const fetchLatestRates = async (fromCurrency = 'EUR', toCurrency = 'USD') => {
