@@ -8,8 +8,8 @@ import NavBar from './components/NavBar';
 import { fetchCurrencyPairRate } from './services/currencyService';
 
 const App = () => {
-    const [fromCurrency, setFromCurrency] = useState('USD');
-    const [toCurrency, setToCurrency] = useState('EUR');
+    const [fromCurrency, setFromCurrency] = useState('BRL');
+    const [toCurrency, setToCurrency] = useState('CAD');
     const [amount, setAmount] = useState(1);
     const [conversionRate, setConversionRate] = useState(null);
     const [convertedAmount, setConvertedAmount] = useState(null);
