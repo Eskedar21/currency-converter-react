@@ -20,7 +20,7 @@ const CurrencyDropdown = ({
 
   return (
     <div className="relative w-full">
-      {/* Label with flag */}
+      
       <label className={`${darkMode ? "text-neutral-100" : "text-[#244e6d]"} text-base font-semibold font-['Inter'] `}>
         {title}:
         <img 

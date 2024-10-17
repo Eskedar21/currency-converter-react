@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa'; // Import icons
 import CurrencyInputContainer from './components/CurrencyInputContainer';
 import HistoricalRatesGraph from './components/HistoricalRatesGraph';
 import SetAlert from './components/SetAlert';
 import NavBar from './components/NavBar';
+import { fetchCurrencyPairRate } from './services/currencyService'; // Import the service function
 
 const App = () => {
     const [fromCurrency, setFromCurrency] = useState('USD');
@@ -26,10 +26,7 @@ const App = () => {
     };
 
     const handleSetAlert = (alertValue, email) => {
-        // Here you would implement logic to set an alert
         console.log(`Alert set for ${alertValue} ${fromCurrency} to ${email}`);
-        
-        // Update alert message state to show success
         setAlertMessage(`Alert set for ${alertValue} ${fromCurrency} to ${email}`);
     };
 
@@ -41,38 +38,33 @@ const App = () => {
         document.body.className = darkMode ? 'bg-[#181818] text-white' : 'bg-white text-black';
     }, [darkMode]);
 
-    const handleConvert = () => {
+    const handleConvert = async () => {
+        setErrorMessage(''); // Reset error message before fetching
         if (fromCurrency && toCurrency) {
-            const fetchConversionRate = async () => {
-                try {
-                    const response = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`);
-                    
-                    if (!response.ok) {
-                        const errorDetails = await response.text();
-                        throw new Error(`Failed to fetch exchange rate: ${response.statusText} - ${errorDetails}`);
-                    }
+            try {
+                const data = await fetchCurrencyPairRate(fromCurrency, toCurrency); // Use the service to fetch the rate
+                const rate = data.rates[toCurrency];
 
-                    const data = await response.json();
-                    const rate = data.rates[toCurrency];
-
-                    // Check if the currency pair is valid
-                    if (!rate) {
-                        throw new Error(`Unsupported currency: ${fromCurrency} to ${toCurrency}`);
-                    }
-
-                    setConversionRate(rate); // Set conversion rate
-                    const result = (amount * rate).toFixed(2);
-                    setConvertedAmount(result);
-
-                    // Reset error message
-                    setErrorMessage('');
-
-                } catch (error) {
-                    console.error('Error fetching conversion rate:', error.message);
-                    setErrorMessage(error.message); // Set error message
+                if (!rate) {
+                    throw new Error(`Unsupported currency: ${fromCurrency} to ${toCurrency}`);
                 }
-            };
-            fetchConversionRate();
+
+                setConversionRate(rate); // Set conversion rate
+                const result = (amount * rate).toFixed(2);
+                setConvertedAmount(result);
+
+            } catch (error) {
+                console.error('Error fetching conversion rate:', error.message);
+
+                // Display user-friendly error messages
+                if (error.message.includes('Network error')) {
+                    setErrorMessage('Network error: Please check your internet connection.');
+                } else if (error.message.includes('Unsupported currency')) {
+                    setErrorMessage(`Currency not supported: ${fromCurrency} or ${toCurrency} might not be available.`);
+                } else {
+                    setErrorMessage('Something went wrong while fetching the conversion rate. Please try again.');
+                }
+            }
         }
     };
 
@@ -121,7 +113,7 @@ const App = () => {
             />
 
             <SetAlert 
-                conversionRate={conversionRate} // Pass the fetched conversion rate
+                conversionRate={conversionRate} 
                 fromCurrency={fromCurrency} 
                 onSetAlert={handleSetAlert} 
                 darkMode={darkMode}
