@@ -13,7 +13,8 @@ const CurrencyInputContainer = ({
   setConversionRate,
   convertedAmount,
   darkMode,
-  onConvert, 
+  onConvert,
+  errorMessage, 
 }) => {
   return (
     <div className={`md:w-[1200px] md:h-80 sm:w-[90%] min-h-[250px]  w-[500px] ${darkMode ? "bg-black" : "bg-[#f8f8f8]"} rounded-lg absolute top-52 left-1/2 transform -translate-x-1/2 flex flex-col items-center pt-10 pb-2`}>
@@ -37,6 +38,7 @@ const CurrencyInputContainer = ({
         setConversionRate={setConversionRate} 
         convertedAmount={convertedAmount} 
         darkMode={darkMode}
+        errorMessage={errorMessage} 
       />
     </div>
   );

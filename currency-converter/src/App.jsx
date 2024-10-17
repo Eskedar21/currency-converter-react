@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
-import { FaMoon, FaSun } from 'react-icons/fa'; // Import icons
+import { FaMoon, FaSun } from 'react-icons/fa'; 
 import CurrencyInputContainer from './components/CurrencyInputContainer';
 import HistoricalRatesGraph from './components/HistoricalRatesGraph';
 import SetAlert from './components/SetAlert';
 import NavBar from './components/NavBar';
-import { fetchCurrencyPairRate } from './services/currencyService'; // Import the service function
+import { fetchCurrencyPairRate } from './services/currencyService';
 
 const App = () => {
     const [fromCurrency, setFromCurrency] = useState('USD');
@@ -12,9 +13,9 @@ const App = () => {
     const [amount, setAmount] = useState(1);
     const [conversionRate, setConversionRate] = useState(null);
     const [convertedAmount, setConvertedAmount] = useState(null);
-    const [darkMode, setDarkMode] = useState(false); // Dark mode state
-    const [errorMessage, setErrorMessage] = useState(''); // State for error messages
-    const [alertMessage, setAlertMessage] = useState(''); // State for alert messages
+    const [darkMode, setDarkMode] = useState(false); 
+    const [errorMessage, setErrorMessage] = useState(''); 
+    const [alertMessage, setAlertMessage] = useState(''); 
 
     const handleCurrencyChange = (from, to) => {
         setFromCurrency(from);
@@ -39,24 +40,24 @@ const App = () => {
     }, [darkMode]);
 
     const handleConvert = async () => {
-        setErrorMessage(''); // Reset error message before fetching
+        setErrorMessage('');
         if (fromCurrency && toCurrency) {
             try {
-                const data = await fetchCurrencyPairRate(fromCurrency, toCurrency); // Use the service to fetch the rate
+                const data = await fetchCurrencyPairRate(fromCurrency, toCurrency);
                 const rate = data.rates[toCurrency];
 
                 if (!rate) {
                     throw new Error(`Unsupported currency: ${fromCurrency} to ${toCurrency}`);
                 }
 
-                setConversionRate(rate); // Set conversion rate
+                setConversionRate(rate); 
                 const result = (amount * rate).toFixed(2);
                 setConvertedAmount(result);
 
             } catch (error) {
                 console.error('Error fetching conversion rate:', error.message);
 
-                // Display user-friendly error messages
+                
                 if (error.message.includes('Network error')) {
                     setErrorMessage('Network error: Please check your internet connection.');
                 } else if (error.message.includes('Unsupported currency')) {
@@ -104,6 +105,7 @@ const App = () => {
                 setConvertedAmount={setConvertedAmount}
                 onConvert={handleConvert} 
                 darkMode={darkMode}
+                errorMessage={errorMessage} 
             />
             
             <HistoricalRatesGraph

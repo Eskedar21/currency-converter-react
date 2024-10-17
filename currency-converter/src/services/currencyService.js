@@ -16,7 +16,8 @@ export const fetchExchangeRates = async () => {
     if (error.message.includes('NetworkError')) {
       throw new Error('Network error: Please check your internet connection.');
     } else {
-      throw new Error('Something went wrong while fetching exchange rates. Please try again.');
+    
+      console.error('An error occurred:', error.message);
     }
   }
 };
@@ -39,28 +40,9 @@ export const fetchCurrencyPairRate = async (fromCurrency, toCurrency) => {
     } else if (error.message.includes('404')) {
       throw new Error(`Currency not supported: ${fromCurrency} or ${toCurrency} might not be available.`);
     } else {
-      throw new Error('Something went wrong while fetching the currency pair. Please try again.');
+      console.error('An error occurred:', error.message);
     }
   }
 };
 
-// Fetch available currencies and their full names
-export const fetchAvailableCurrencies = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/currencies`);
 
-    // Check if the response is OK
-    if (!response.ok) {
-      const errorDetails = await response.text();
-      throw new Error(`Failed to fetch available currencies: ${response.statusText} - ${errorDetails}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    if (error.message.includes('NetworkError')) {
-      throw new Error('Network error: Please check your internet connection.');
-    } else {
-      throw new Error('Something went wrong while fetching available currencies. Please try again.');
-    }
-  }
-};
