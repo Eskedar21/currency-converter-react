@@ -16,7 +16,7 @@ export const fetchHistoricalRates = async (fromCurrency = 'EUR', toCurrency = 'U
   
 
   // Fetch the latest exchange rate along with the last update timestamp
-export const fetchLatestRates = async (fromCurrency = 'EUR', toCurrency = 'USD') => {
+export const fetchLatestRates = async (fromCurrency = 'BRL', toCurrency = 'CAD') => {
   const url = `${baseUrl}/latest?from=${fromCurrency}&to=${toCurrency}`;
   try {
       const response = await fetch(url);

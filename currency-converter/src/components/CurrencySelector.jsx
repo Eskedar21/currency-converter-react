@@ -7,7 +7,7 @@ const CurrencySelector = ({ onCurrencyChange, darkMode }) => {
   const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('BRL');
   const [toCurrency, setToCurrency] = useState('CAD');
-  const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("favorites")) || ["USD", "EUR"]);
+  const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("favorites")) || ["BRL", "CAD"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
